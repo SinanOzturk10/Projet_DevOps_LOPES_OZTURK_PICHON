@@ -16,16 +16,16 @@ public class Vector1DTest {
         assertArrayEquals("Shape lors de la création", shape, v.getShape());
 
         float[] copy = {1.1f, 2.2f, 3.3f};
-        assertArrayEquals("Comparaison deux NDarray lors de la création", copy, v.getData(), 0.001f);
+        assertArrayEquals("Comparaison deux NDarray lors de la création", copy, v.getData(), 0.0000001f);
     }
 
     @Test
     public void getTest() {
     float tab [] = {1.1f, 2.2f, 3.3f};
     Vector1D v = new Vector1D(tab);
-    assertEquals("Premier get",1.1f, v.get(0), 0.001f);
-    assertEquals("Deuxieme get",2.2f, v.get(1), 0.001f);
-    assertEquals("Troisieme get",3.3f, v.get(2), 0.001f);
+    assertEquals("Premier get",1.1f, v.get(0), 0.0000001f);
+    assertEquals("Deuxieme get",2.2f, v.get(1), 0.0000001f);
+    assertEquals("Troisieme get",3.3f, v.get(2), 0.0000001f);
 
     }
 
@@ -35,8 +35,8 @@ public class Vector1DTest {
     Vector1D v = new Vector1D(tab);
     v.set(0, 10.10f);
     v.set(2, 30.30f);
-    assertEquals("Premier set",10.10f, v.get(0), 0.001f);
-    assertEquals("Deuxieme set",30.30f, v.get(2), 0.001f);
+    assertEquals("Premier set",10.10f, v.get(0), 0.0000001f);
+    assertEquals("Deuxieme set",30.30f, v.get(2), 0.0000001f);
     }
 
     @Test
@@ -46,9 +46,9 @@ public class Vector1DTest {
     
     NdArray add = v1.add(v2);
     Vector1D addVector = (Vector1D) add;
-    assertEquals("Vérification premiere valeur après add",5.0f, addVector.get(0), 0.001f);
-    assertEquals("Vérification deuxieme valeur après add",7.0f, addVector.get(1), 0.001f);
-    assertEquals("Vérification troisieme valeur après add",9.0f, addVector.get(2), 0.001f);
+    assertEquals("Vérification premiere valeur après add",5.0f, addVector.get(0), 0.0000001f);
+    assertEquals("Vérification deuxieme valeur après add",7.0f, addVector.get(1), 0.0000001f);
+    assertEquals("Vérification troisieme valeur après add",9.0f, addVector.get(2), 0.0000001f);
     }
 
     @Test
@@ -58,9 +58,9 @@ public class Vector1DTest {
     
     v1.iadd(v2);
     
-    assertEquals("Vérification premiere valeur après iadd", 5.0f, v1.get(0), 0.001f);
-    assertEquals("Vérification premiere valeur après iadd", 7.0f, v1.get(1), 0.001f);
-    assertEquals("Vérification premiere valeur après iadd", 9.0f, v1.get(2), 0.001f);
+    assertEquals("Vérification premiere valeur après iadd", 5.0f, v1.get(0), 0.0000001f);
+    assertEquals("Vérification deuxieme valeur après iadd", 7.0f, v1.get(1), 0.0000001f);
+    assertEquals("Vérification troisieme valeur après iadd", 9.0f, v1.get(2), 0.0000001f);
     }
 
     @Test
@@ -80,5 +80,58 @@ public class Vector1DTest {
 
     }
 
-    
+    @Test
+    public void dotTest() {
+        Vector1D v1 = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        Vector1D v2 = new Vector1D(new float[]{4.0f, 5.0f, 6.0f});
+        
+        float result = v1.dot(v2);
+        
+        assertEquals("Résultat du produit scalaire", 32.0f, result, 1e-6f);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void dotMauvaiseTailleTest() {
+        Vector1D v1 = new Vector1D(new float[]{1.0f, 2.0f});
+        Vector1D v2 = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        v1.dot(v2);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void getIndiceNegatifTest() {
+        Vector1D v = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        v.get(-1);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void getOutOfBoundsTest() {
+        Vector1D v = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        v.get(10);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void setIndiceNegatifTest() {
+        Vector1D v = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        v.set(-1, 5.0f);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void setOutOfBoundsTest() {
+        Vector1D v = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        v.set(10, 5.0f);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addMauvaiseTailleTest() {
+        Vector1D v1 = new Vector1D(new float[]{1.0f, 2.0f});
+        Vector1D v2 = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        v1.add(v2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void iaddMauvaiseTailleTest() {
+        Vector1D v1 = new Vector1D(new float[]{1.0f, 2.0f});
+        Vector1D v2 = new Vector1D(new float[]{1.0f, 2.0f, 3.0f});
+        v1.iadd(v2);
+    }
 }
