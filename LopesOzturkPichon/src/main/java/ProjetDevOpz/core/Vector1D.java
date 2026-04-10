@@ -8,11 +8,21 @@ public class Vector1D extends NdArray {
 
 
     public float get(int i) {
+        //Out-of-bound verification
+        if (i < 0 || i >= size) {
+            throw new IndexOutOfBoundsException("Index " + i + " out of bounds for size " + size);
+        }
+
         return data[i];
     }
 
 
     public void set(int i, float value) {
+        //Out-of-bound verification
+        if (i < 0 || i >= size) {
+            throw new IndexOutOfBoundsException("Index " + i + " out of bounds for size " + size);
+        }
+
         data[i] = value;
     }
 

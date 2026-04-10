@@ -23,6 +23,7 @@ public class NdArrayFactory {
         return new Vector1D(new float[shape[0]]);
     }
 
+    //For the moment arrange work only vector 1D true arrange will have more parameter
     public static NdArray arange(float start, float stop) {
         int length = (int) (stop - start);
         if (length < 0) {
@@ -36,6 +37,7 @@ public class NdArrayFactory {
 
         return new Vector1D(res);
     }
+
 
     // for the reshape() method
     public static NdArray fromRaw(float[] data, int[] shape) {
