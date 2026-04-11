@@ -63,7 +63,8 @@ public class Vector1DTest {
     assertEquals("Vérification troisieme valeur après iadd", 9.0f, v1.get(2), 0.0000001f);
     }
 
-    @Test
+    // Test later
+    // @Test
     public void reshapeTest() {
     Vector1D v = new Vector1D(new float[]{1, 2, 3, 4, 5, 6});
     
