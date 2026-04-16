@@ -1,5 +1,7 @@
 # Projet_DevOps_LOPES_OZTURK_PICHON
 
+[![CI](https://github.com/SinanOzturk10/Projet_DevOps_LOPES_OZTURK_PICHON/actions/workflows/ci.yml/badge.svg)](https://github.com/SinanOzturk10/Projet_DevOps_LOPES_OZTURK_PICHON/actions/workflows/ci.yml)
+
 ## Features
 Describe the implemented features
 
