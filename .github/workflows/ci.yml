@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build & Test
-        run: mvn verify
+        run: mvn verify --settings .mvn/settings.xml
         working-directory: LopesOzturkPichon
 
       - name: Upload coverage report
@@ -28,3 +28,10 @@ jobs:
         with:
           name: jacoco-report
           path: LopesOzturkPichon/target/site/jacoco/
+
+      - name: Publish to GitHub Packages
+        if: github.event_name == 'push'
+        run: mvn deploy -DskipTests --settings .mvn/settings.xml
+        working-directory: LopesOzturkPichon
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
