@@ -29,8 +29,43 @@ public class Matrix2D extends NdArray {
     }
 
 
-    public Matrix2D matmul(Matrix2D other)             { throw new UnsupportedOperationException(); }
-    public Matrix2D transpose()                        { throw new UnsupportedOperationException(); }
+    public Matrix2D matmul(Matrix2D other) {
+        if (this.shape[1] != other.shape[0]) {
+            throw new IllegalArgumentException("Matrices have incompatible shapes for matmul");
+        }
+
+        int lines = this.shape[0];
+        int col = other.shape[1];
+        int common = this.shape[1];
+        float[] res = new float[lines * col];
+
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < col; j++) {
+                float sum = 0f;
+                for (int k = 0; k < common; k++) {
+                    sum += this.get(i, k) * other.get(k, j);
+                }
+                res[i * col + j] = sum;
+            }
+        }
+
+        return new Matrix2D(res, lines, col);
+    }
+
+
+    public Matrix2D transpose() {
+        int lines = this.shape[1];
+        int col = this.shape[0];
+        float[] res = new float[size];
+
+        for (int i = 0; i < this.shape[0]; i++) {
+            for (int j = 0; j < this.shape[1]; j++) {
+                res[j * col + i] = this.get(i, j);
+            }
+        }
+
+        return new Matrix2D(res, lines, col);
+    }
 
 
     @Override
