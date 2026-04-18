@@ -133,7 +133,7 @@ Aucune image Docker n'a été produite pour l'instant.
 - [ ] Badge couverture de code
 
 #### 4.9 Valorisation de la bibliothèque \[difficulté : 1\]
-- [ ] Site web GitHub Pages (README, Javadoc ou maven-site-plugin)
+- [x] Site web GitHub Pages — maven-site avec JaCoCo, Javadoc et Surefire, déployé depuis `main` et `develop`
 
 #### 4.10 SonarQube \[difficulté : 3\]
 - [ ] Analyse statique intégrée à la pipeline
