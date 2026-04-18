@@ -1,3 +1,4 @@
+[![CI](https://github.com/SinanOzturk10/Projet_DevOps_LOPES_OZTURK_PICHON/actions/workflows/ci.yml/badge.svg)](https://github.com/SinanOzturk10/Projet_DevOps_LOPES_OZTURK_PICHON/actions/workflows/ci.yml)
 # Projet DevOps — LopesOzturkPichon
 
 **Auteurs :** Allan Lopes · Sinan Ozturk · Kalvin-Giang Pichon
