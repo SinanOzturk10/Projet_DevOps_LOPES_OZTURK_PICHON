@@ -12,7 +12,23 @@ public class NdArrayFactory {
     }
 
 
-    public static Matrix2D  array(float[][] data)           { throw new UnsupportedOperationException(); }
+    public static Matrix2D array(float[][] data) {
+        int lines = data.length;
+        int cols = data[0].length;
+        float[] res = new float[lines * cols];
+
+        for (int i = 0; i < lines; i++) {
+            if (data[i].length != cols) {
+                throw new IllegalArgumentException("All lines must have the same length");
+            }
+
+            for (int j = 0; j < cols; j++) {
+                res[i * cols + j] = data[i][j];
+            }
+        }
+
+        return new Matrix2D(res, lines, cols);
+    }
 
 
     public static NdArray zeros(int... shape) {
