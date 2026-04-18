@@ -32,14 +32,18 @@ public class NdArrayFactory {
 
 
     public static NdArray zeros(int... shape) {
-        if (shape.length != 1) {
-            throw new IllegalArgumentException("Only 1D zeros is supported for now");
+        if (shape.length == 1) {
+            return new Vector1D(new float[shape[0]]);
         }
 
-        return new Vector1D(new float[shape[0]]);
+        if (shape.length == 2) {
+            return new Matrix2D(new float[shape[0] * shape[1]], shape[0], shape[1]);
+        }
+
+        throw new IllegalArgumentException("Only 1D and 2D zeros are supported for now");
     }
 
-    //For the moment arrange work only vector 1D true arrange will have more parameter
+    //For the moment arrange work only vector 1D we can use reshape after to change the result
     public static NdArray arange(float start, float stop) {
         int length = (int) (stop - start);
         if (length < 0) {
@@ -61,6 +65,10 @@ public class NdArrayFactory {
             return new Vector1D(data);
         }
 
-        throw new IllegalArgumentException("Only 1D zeros is supported for now");
+        if (shape.length == 2) {
+            return new Matrix2D(data, shape[0], shape[1]);
+        }
+
+        throw new IllegalArgumentException("Only 1D and 2D arrays are supported for now");
     }
 }
