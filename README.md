@@ -41,7 +41,7 @@ Ce projet implémente une bibliothèque Java de tableaux N-dimensionnels, inspir
 | **JUnit 4** | Framework de tests unitaires | Simplicité, annotation `@Test`, support natif Maven Surefire |
 | **JaCoCo 0.8.12** | Couverture de code | Génération de rapports HTML, intégration Maven via `mvn verify` |
 | **GitHub Actions** | CI/CD | Intégration native GitHub, configuration YAML, gratuit pour les dépôts publics |
-| **Docker** | <!-- TODO: décrire l'usage Docker --> | <!-- TODO --> |
+| **Docker** | Lancement automatique de la démonstration à l'éxécution, hébergé sur DockerHub, configuration/automatisation YAML |
 
 ---
 
@@ -67,16 +67,24 @@ Nous avons adopté un workflow basé sur **Git Flow simplifié** :
 
 ## Images Docker
 
-<!-- TODO: compléter cette section si des images Docker ont été produites -->
 
-Aucune image Docker n'a été produite pour l'instant.
+Une image Docker de démonstration basé sur Ubuntu est produite pour le projet. A l'éxécution l'image docker montre directement différentes opérations utilisable avec la bibliothèque scientifique que nous avons implémentées.
+Si la livraison automatique fonctionne, la version latest sera une version alpine alégé permettant de passer d'une image de 800MB à 200MB.
 
-<!-- Exemple de ce qui est attendu :
-| Image | Description | Lien |
-|---|---|---|
-| `nom/image:tag` | Description courte | [Docker Hub](https://hub.docker.com/...) |
--->
+**Dépôt Docker Hub** : https://hub.docker.com/r/allandocker90/ndarray-demo
 
+## Utilisation
+
+Pour la premiere version ubuntu
+```bash
+docker pull allandocker90/ndarray-demo:ubuntu
+docker run --rm allandocker90/ndarray-demo:ubuntu
+```
+Pour la version alpine :
+```bash
+docker pull allandocker90/ndarray-demo:latest
+docker run --rm allandocker90/ndarray-demo:latest
+```
 ---
 
 ## Avancement du TP
@@ -123,8 +131,8 @@ Aucune image Docker n'a été produite pour l'instant.
 - [x] Déploiement automatique vers GitHub Packages à chaque push sur `main`/`develop`
 
 #### 4.6 Livraison continue Docker \[difficulté : 3\]
-- [ ] Image Docker avec scénario de démonstration
-- [ ] Déploiement automatique de l'image dans la pipeline
+- [x] Image Docker avec scénario de démonstration
+- [x] Déploiement automatique de l'image dans la pipeline
 
 #### 4.7 Infrastructure-as-code et Cloud \[difficulté : 4\]
 - [ ] Déploiement automatique sur Google Cloud avec Terraform/Ansible
