@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -21,6 +23,13 @@ jobs:
 
       - name: Build & Test
         run: mvn verify --settings .mvn/settings.xml
+        working-directory: LopesOzturkPichon
+
+      - name: SonarQube analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: mvn -B sonar:sonar -DskipTests -Dsonar.projectKey=M1-DevOps-Projet -Dsonar.projectName='M1-DevOps-Projet' --settings .mvn/settings.xml
         working-directory: LopesOzturkPichon
 
       - name: Upload coverage report
@@ -35,3 +44,29 @@ jobs:
         working-directory: LopesOzturkPichon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate site
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        run: mvn site
+        working-directory: LopesOzturkPichon
+
+      - name: Upload pages artifact
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: LopesOzturkPichon/target/site/
+
+  pages:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
