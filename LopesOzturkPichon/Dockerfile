@@ -1,12 +1,10 @@
-FROM ubuntu:24.04 AS build
+FROM alpine:latest AS build
 
 WORKDIR /app
 
-RUN apt-get update
-RUN apt-get install -y maven openjdk-17-jdk
-RUN rm -rf /var/lib/apt/lists/*
+RUN apk add maven openjdk17
 
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
 COPY pom.xml .
@@ -14,14 +12,15 @@ COPY src ./src
 
 RUN mvn clean package
 
-FROM ubuntu:24.04
+FROM alpine:latest
 
 WORKDIR /app
 
-RUN apt-get update
-RUN apt-get install -y openjdk-17-jre
-RUN rm -rf /var/lib/apt/lists/*
+RUN apk add openjdk17-jre
 
-COPY --from=build /app/target/LopesOzturkPichon-1.0-SNAPSHOT.jar demo.jar
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+ENV PATH="$JAVA_HOME/bin:$PATH"
 
-CMD ["java", "-jar", "demo.jar"]
+COPY --from=build /app/target/LopesOzturkPichon-1.0-SNAPSHOT.jar app.jar
+
+CMD ["java", "-jar", "app.jar"]
