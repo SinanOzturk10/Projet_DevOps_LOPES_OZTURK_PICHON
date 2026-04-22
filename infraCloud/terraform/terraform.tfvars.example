@@ -1,0 +1,5 @@
+project  = "your-gcp-project-id"
+ssh_user = "your-linux-user"
+
+# Default SSH public key used by Terraform to provision access to the VM.
+ssh_public_key_path = "~/.ssh/id_rsa.pub"

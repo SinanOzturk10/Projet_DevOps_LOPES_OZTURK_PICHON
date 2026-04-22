@@ -1,0 +1,37 @@
+---
+- name: Deploiment de la demo de la bibliotheque scientifique sur Docker sur une machine virtuelle Google Cloud
+  hosts: ndarray_demo
+  become: true
+
+  pre_tasks:
+    - name: Verification de la disponibilité de python3 pour ansible
+      ansible.builtin.raw: test -e /usr/bin/python3 || (apt-get update && apt-get install -y python3)
+      changed_when: false
+
+  tasks:
+    - name: Installation de docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+        update_cache: true
+
+    - name: Activation des services docker
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: docker pull de la demo
+      ansible.builtin.command: docker pull allandocker90/ndarray-demo:latest
+      changed_when: "'Downloaded newer image' in docker_pull.stdout or 'Pull complete' in docker_pull.stdout"
+      register: docker_pull
+
+    - name: Execution de la demo puis enregistrement de la sortie sur le ndarray-demo.log
+      ansible.builtin.shell: docker run --rm allandocker90/ndarray-demo:latest > /home/{{ ansible_user }}/ndarray-demo.log 2>&1
+      args:
+        executable: /bin/bash
+      changed_when: true
+
+    - name: Information sur la sortie
+      ansible.builtin.debug:
+        msg: "Demo output ecrit dans /home/{{ ansible_user }}/ndarray-demo.log"
