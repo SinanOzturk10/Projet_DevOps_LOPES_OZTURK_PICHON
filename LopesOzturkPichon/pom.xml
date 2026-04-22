@@ -5,7 +5,7 @@
 
   <groupId>ProjetDevOpz</groupId>
   <artifactId>LopesOzturkPichon</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
 
   <name>LopesOzturkPichon</name>
   <!-- FIXME change it to the project's website -->
@@ -84,6 +84,18 @@
     
     <plugins>
       <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>ProjetDevOpz.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+        
+  
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
@@ -147,5 +159,11 @@
       </plugin>
     </plugins>
   </reporting>
+  
+
+  
+
+  
+
 
 </project>

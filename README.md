@@ -17,18 +17,26 @@ Ce projet implémente une bibliothèque Java de tableaux N-dimensionnels, inspir
   - `add(other)` — addition élément par élément, retourne un nouveau vecteur
   - `iadd(other)` — addition en place (`+=`)
   - `dot(other)` — produit scalaire
+- **`Matrix2D`** — matrice 2D complète. Opérations disponibles :
+  - `get(i, j)` / `set(i, j, value)` — accès et modification par indice (avec vérification de bornes)
+  - `add(other)` — addition élément par élément, retourne une nouvelle matrice
+  - `iadd(other)` — addition en place (`+=`)
+  - `matmul(other)` — produit matriciel
+  - `transpose()` — transposition de la matrice
 - **`NdArrayFactory`** — fabrique centralisée pour créer des tableaux :
-  - `array(float[])` — depuis un tableau de flottants
-  - `zeros(int... shape)` — tableau rempli de zéros (1D uniquement pour l'instant)
-  - `arange(float start, float stop)` — tableau de valeurs consécutives
-- **`NdArrayPrinter`** — affichage formaté des tableaux.
+  - `array(float[])` — depuis un tableau de flottants (crée un `Vector1D`)
+  - `array(float[][])` — depuis un tableau 2D de flottants (crée une `Matrix2D`)
+  - `zeros(int... shape)` — tableau rempli de zéros (1D et 2D)
+  - `arange(float start, float stop)` — séquence de valeurs consécutives (1D)
+- **`NdArrayPrinter`** — affichage formaté des tableaux (1D et 2D).
+- **`reshape()`** — changement de forme, disponible sur tous les `NdArray`.
 
-### Fonctionnalités prévues / en cours
+### Fonctionnalités non implémentées (optionnelles)
 
-- **`Matrix2D`** — structure 2D déclarée, méthodes à implémenter : `get(i,j)`, `set(i,j,value)`, `add()`, `iadd()`, `matmul()`, `transpose()`
-- `NdArrayFactory.array(float[][])` — création de matrices 2D
-- Extension de `zeros()` et `arange()` aux shapes N-dimensionnels
-- <!-- TODO: compléter avec les fonctionnalités prévues pour la suite du TP -->
+- Extension de `zeros()` et `arange()` aux shapes N-dimensionnels (> 2D)
+- Broadcast (opérations entre tableaux de dimensions différentes)
+- Universal functions (`sum`, `min`, `max`, etc.)
+- Support d'autres types de données (`int`, `double`, etc.)
 
 ---
 
@@ -41,7 +49,7 @@ Ce projet implémente une bibliothèque Java de tableaux N-dimensionnels, inspir
 | **JUnit 4** | Framework de tests unitaires | Simplicité, annotation `@Test`, support natif Maven Surefire |
 | **JaCoCo 0.8.12** | Couverture de code | Génération de rapports HTML, intégration Maven via `mvn verify` |
 | **GitHub Actions** | CI/CD | Intégration native GitHub, configuration YAML, gratuit pour les dépôts publics |
-| **Docker** | <!-- TODO: décrire l'usage Docker --> | <!-- TODO --> |
+| **Docker** | Lancement automatique de la démonstration à l'éxécution, hébergé sur DockerHub, configuration/automatisation YAML |
 
 ---
 
@@ -59,24 +67,33 @@ Nous avons adopté un workflow basé sur **Git Flow simplifié** :
 2. Il ouvre une **Pull Request** vers `develop` sur GitHub.
 3. La **pipeline CI** (GitHub Actions) se déclenche automatiquement : compilation + tests + rapport JaCoCo.
 4. La PR ne peut être fusionnée que si la CI est verte.
-5. <!-- TODO: décrire si une relecture par un autre membre de l'équipe est requise (règle de protection de branche, reviewer obligatoire, etc.) -->
+5. La PR doit être approuvée par un autre membre de l'équipe. Les branches `develop` et `main` sont protégées : aucun push direct n'est autorisé.
 6. Après validation, la branche `feature/...` est fusionnée dans `develop` puis supprimée.
-7. <!-- TODO: décrire la procédure de merge develop → main (release, tag, etc.) -->
+7. Le merge de `develop` vers `main` n'est effectué que lorsque `develop` pointe sur une version stable, identifiée par un tag.
 
 ---
 
 ## Images Docker
 
-<!-- TODO: compléter cette section si des images Docker ont été produites -->
 
-Aucune image Docker n'a été produite pour l'instant.
+Une image Docker de démonstration est produite pour le projet. À l'exécution, elle déroule automatiquement un scénario illustrant les principales opérations de la bibliothèque.
 
-<!-- Exemple de ce qui est attendu :
-| Image | Description | Lien |
-|---|---|---|
-| `nom/image:tag` | Description courte | [Docker Hub](https://hub.docker.com/...) |
--->
+Deux images sont disponibles : une version Ubuntu (tag `ubuntu`) conservée à titre de référence, et une version Alpine (tag `latest`) livrée automatiquement depuis la pipeline sur `main`, réduite de 800 MB à environ 200 MB.
 
+**Dépôt Docker Hub** : https://hub.docker.com/r/allandocker90/ndarray-demo
+
+## Utilisation
+
+Pour la premiere version ubuntu
+```bash
+docker pull allandocker90/ndarray-demo:ubuntu
+docker run --rm allandocker90/ndarray-demo:ubuntu
+```
+Pour la version alpine :
+```bash
+docker pull allandocker90/ndarray-demo:latest
+docker run --rm allandocker90/ndarray-demo:latest
+```
 ---
 
 ## Avancement du TP
@@ -107,12 +124,12 @@ Aucune image Docker n'a été produite pour l'instant.
 #### 5.1 Fonctionnalités obligatoires
 - [x] `NdArray` — structure de base avec attributs `ndim`, `shape`, `size`
 - [x] `Vector1D` — tableau 1D avec `get`, `set`, `add`, `iadd`, `dot`
-- [ ] `Matrix2D` — structure 2D (`get`, `set`, `add`, `iadd`, `matmul`, `transpose`)
-- [x] `array()`, `zeros()`, `arange()` — fonctions de création (1D)
-- [ ] `array(float[][])` — création depuis un tableau 2D
+- [x] `Matrix2D` — structure 2D (`get`, `set`, `add`, `iadd`, `matmul`, `transpose`)
+- [x] `array()`, `zeros()`, `arange()` — fonctions de création (1D et 2D)
+- [x] `array(float[][])` — création depuis un tableau 2D
 - [x] Affichage (`NdArrayPrinter`)
 - [x] `add()` / `iadd()` pour `Vector1D`
-- [ ] `add()` / `iadd()` pour `Matrix2D`
+- [x] `add()` / `iadd()` pour `Matrix2D`
 - [x] `reshape()`
 
 ---
@@ -123,24 +140,24 @@ Aucune image Docker n'a été produite pour l'instant.
 - [x] Déploiement automatique vers GitHub Packages à chaque push sur `main`/`develop`
 
 #### 4.6 Livraison continue Docker \[difficulté : 3\]
-- [ ] Image Docker avec scénario de démonstration
-- [ ] Déploiement automatique de l'image dans la pipeline
+- [x] Image Docker avec scénario de démonstration
+- [x] Déploiement automatique de l'image dans la pipeline
 
 #### 4.7 Infrastructure-as-code et Cloud \[difficulté : 4\]
 - [ ] Déploiement automatique sur Google Cloud avec Terraform/Ansible
 
 #### 4.8 Badges \[difficulté : 1\]
-- [ ] Badge CI/CD dans le README
+- [x] Badge CI/CD dans le README
 - [ ] Badge couverture de code
 
 #### 4.9 Valorisation de la bibliothèque \[difficulté : 1\]
 - [x] Site web GitHub Pages — maven-site avec JaCoCo, Javadoc et Surefire, déployé depuis `main` et `develop`
 
 #### 4.10 SonarQube \[difficulté : 3\]
-- [ ] Analyse statique intégrée à la pipeline
+- [x] Analyse statique intégrée à la pipeline (`mvn sonar:sonar` sur chaque push/PR vers `main`/`develop`)
 
 #### 5.2 Fonctionnalités optionnelles
-- [ ] Support `Matrix2D` complet
+- [x] Support `Matrix2D` complet (`get`, `set`, `add`, `iadd`, `matmul`, `transpose`)
 - [ ] Broadcast (opérations entre dimensions différentes)
 - [ ] Universal functions (`sum`, `min`, `max`, etc.)
 - [ ] Support d'autres types de données (`int`, `double`, etc.)
@@ -149,20 +166,20 @@ Aucune image Docker n'a été produite pour l'instant.
 
 ## Feedback
 
-<!-- TODO: compléter cette section en fin de projet avec le retour d'expérience de chaque membre -->
-
 ### GitHub Actions
 
-<!-- TODO: retour sur la facilité de mise en place, les limitations rencontrées, etc. -->
+Outil très satisfaisant. Tout est accessible depuis l'interface GitHub, le dashboard est clair, et après deux ou trois PRs on a vite saisi le fonctionnement. La mise à disposition de machines virtuelles par GitHub est un vrai plus : elle nous garantit que le code qu'on pousse est fiable et testé dans un environnement propre.
 
 ### Maven / JaCoCo
 
-<!-- TODO: retour sur l'intégration des outils de build et de couverture -->
+Maven nous a considérablement simplifié la vie. Ne pas avoir à gérer le build manuellement permet de se concentrer sur ce qui a vraiment de la valeur. Toute la configuration du projet tient dans un seul fichier `pom.xml`, ce qui est très pratique.
+
+JaCoCo est un outil formidable pour évaluer la couverture des tests. Un bémol cependant : une fois le seuil de couverture minimum activé, notre workflow feature branch a posé problème. Avec une branche pour l'implémentation et une autre pour les tests, le code ne passait pas la CI faute de couverture suffisante. La solution aurait été de confier implémentation et tests au même développeur, ce qui va à l'encontre de la séparation des tâches. C'est une limite de notre workflow.
 
 ### Git Flow
 
-<!-- TODO: retour sur le workflow adopté, ce qui a bien fonctionné ou non en équipe -->
+Notre façon de travailler s'y adaptait parfaitement. On travaille depuis chez nous de manière asynchrone, donc un tel workflow était même nécessaire. Les branches `feature/`, les PRs et les revues de code ont rendu la collaboration fluide malgré la distance.
 
 ### Outils généraux
 
-<!-- TODO: retour global sur l'expérience DevOps du projet -->
+Ce projet nous a fait prendre en main beaucoup d'outils nouveaux. On se sent maintenant capables de gérer des projets plus ambitieux et on comprend concrètement comment de grands projets logiciels peuvent voir le jour. La méthode DevOps permet de se focaliser sur ce qui est vraiment important et d'accorder de la valeur au travail créatif plutôt qu'aux tâches répétitives.
