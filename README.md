@@ -96,6 +96,13 @@ docker run --rm allandocker90/ndarray-demo:latest
 ```
 ---
 
+**Infrastructure-as-code Cloud**
+
+## Utilisation
+Tout les fichiers propre à cette partie est dans le dossier infraCloud à la racine du dépôt et un Readme dans le même dossier sert de tutoriel.
+
+---
+
 ## Avancement du TP
 
 ### Obligatoire
@@ -144,7 +151,7 @@ docker run --rm allandocker90/ndarray-demo:latest
 - [x] Déploiement automatique de l'image dans la pipeline
 
 #### 4.7 Infrastructure-as-code et Cloud \[difficulté : 4\]
-- [ ] Déploiement automatique sur Google Cloud avec Terraform/Ansible
+- [x] Déploiement automatique sur Google Cloud avec Terraform/Ansible
 
 #### 4.8 Badges \[difficulté : 1\]
 - [x] Badge CI/CD dans le README
@@ -179,6 +186,12 @@ JaCoCo est un outil formidable pour évaluer la couverture des tests. Un bémol 
 ### Git Flow
 
 Notre façon de travailler s'y adaptait parfaitement. On travaille depuis chez nous de manière asynchrone, donc un tel workflow était même nécessaire. Les branches `feature/`, les PRs et les revues de code ont rendu la collaboration fluide malgré la distance.
+
+### Docker
+Le docker en lui-même était plus facile à configurer que prèvu et le site dockerhub est très pratique c'était une étape intéressante. Nous trouvons le principe de conteneur très pratique pour le déploiement et test rapide sur toute machine ayant docker.
+
+### Infrastructure-as-Code
+La compréhension de chaque outil différent était très laborieux mais le fait d'avoir au moins une petite expèrience avec les vm et la plateforme google cloud est très enrichissant.
 
 ### Outils généraux
 
