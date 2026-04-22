@@ -1,0 +1,2 @@
+[ndarray_demo]
+VM_EXTERNAL_IP ansible_user=YOUR_SSH_USER
