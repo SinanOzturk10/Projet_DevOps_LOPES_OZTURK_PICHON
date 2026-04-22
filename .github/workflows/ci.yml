@@ -38,13 +38,6 @@ jobs:
           name: jacoco-report
           path: LopesOzturkPichon/target/site/jacoco/
 
-      - name: Publish to GitHub Packages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: mvn deploy -DskipTests --settings .mvn/settings.xml
-        working-directory: LopesOzturkPichon
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Generate site
         if: github.ref == 'refs/heads/main'
         run: mvn site
