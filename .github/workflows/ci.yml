@@ -39,7 +39,7 @@ jobs:
           path: LopesOzturkPichon/target/site/jacoco/
 
       - name: Publish to GitHub Packages
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: mvn deploy -DskipTests --settings .mvn/settings.xml
         working-directory: LopesOzturkPichon
         env:
