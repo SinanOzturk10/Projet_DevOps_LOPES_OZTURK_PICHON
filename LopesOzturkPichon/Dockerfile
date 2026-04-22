@@ -21,6 +21,6 @@ RUN apk add openjdk17-jre
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 ENV PATH="$JAVA_HOME/bin:$PATH"
 
-COPY --from=build /app/target/LopesOzturkPichon-1.0.jar demo.jar
+COPY --from=build /app/target/LopesOzturkPichon-1.0-SNAPSHOT.jar demo.jar
 
 CMD ["java", "-jar", "demo.jar"]
