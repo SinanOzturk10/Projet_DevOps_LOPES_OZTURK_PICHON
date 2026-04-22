@@ -84,6 +84,18 @@
     
     <plugins>
       <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>ProjetDevOpz.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+        
+  
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
@@ -147,5 +159,11 @@
       </plugin>
     </plugins>
   </reporting>
+  
+
+  
+
+  
+
 
 </project>
